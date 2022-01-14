@@ -1,0 +1,12 @@
+D:\GMO\Xamarin_trainning\Tuan9\EFCore_SQLite\EFCore_SQLite\EFCore_SQLite\bin\Debug\netstandard2.0\EFCore_SQLite.deps.json
+D:\GMO\Xamarin_trainning\Tuan9\EFCore_SQLite\EFCore_SQLite\EFCore_SQLite\bin\Debug\netstandard2.0\EFCore_SQLite.dll
+D:\GMO\Xamarin_trainning\Tuan9\EFCore_SQLite\EFCore_SQLite\EFCore_SQLite\bin\Debug\netstandard2.0\EFCore_SQLite.pdb
+D:\GMO\Xamarin_trainning\Tuan9\EFCore_SQLite\EFCore_SQLite\EFCore_SQLite\obj\Debug\netstandard2.0\EFCore_SQLite.csprojAssemblyReference.cache
+D:\GMO\Xamarin_trainning\Tuan9\EFCore_SQLite\EFCore_SQLite\EFCore_SQLite\obj\Debug\netstandard2.0\App.xaml.g.cs
+D:\GMO\Xamarin_trainning\Tuan9\EFCore_SQLite\EFCore_SQLite\EFCore_SQLite\obj\Debug\netstandard2.0\Views\ItemPage.xaml.g.cs
+D:\GMO\Xamarin_trainning\Tuan9\EFCore_SQLite\EFCore_SQLite\EFCore_SQLite\obj\Debug\netstandard2.0\EFCore_SQLite.AssemblyInfoInputs.cache
+D:\GMO\Xamarin_trainning\Tuan9\EFCore_SQLite\EFCore_SQLite\EFCore_SQLite\obj\Debug\netstandard2.0\EFCore_SQLite.AssemblyInfo.cs
+D:\GMO\Xamarin_trainning\Tuan9\EFCore_SQLite\EFCore_SQLite\EFCore_SQLite\obj\Debug\netstandard2.0\EFCore_SQLite.csproj.CoreCompileInputs.cache
+D:\GMO\Xamarin_trainning\Tuan9\EFCore_SQLite\EFCore_SQLite\EFCore_SQLite\obj\Debug\netstandard2.0\XamlC.stamp
+D:\GMO\Xamarin_trainning\Tuan9\EFCore_SQLite\EFCore_SQLite\EFCore_SQLite\obj\Debug\netstandard2.0\EFCore_SQLite.dll
+D:\GMO\Xamarin_trainning\Tuan9\EFCore_SQLite\EFCore_SQLite\EFCore_SQLite\obj\Debug\netstandard2.0\EFCore_SQLite.pdb

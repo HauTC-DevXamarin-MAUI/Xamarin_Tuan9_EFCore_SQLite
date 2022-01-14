@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="EFCore_SQLite.Views.ItemPage"
+             Title="{Binding Title}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!--Btn Style-->
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor"
+                        Value="CadetBlue"/>
+                <Setter Property="TextColor"
+                        Value="Black"/>
+                <Setter Property="Margin"
+                        Value="0,0,10,0"/>
+            </Style>
+            <!--Lable List Item Style-->
+            <Style TargetType="Label"
+                   x:Key="lblListItem">
+
+                <Setter Property="FontSize"
+                        Value="25"/>
+                <Setter Property="HorizontalOptions"
+                        Value="Center"/>
+                <Setter Property="FontAttributes"
+                        Value="Bold,Italic"/>
+                <Setter Property="TextColor"
+                        Value="Black"/>
+            </Style>
+            <!--BaseEntryStyle-->
+            <Style x:Key="baseEntryStyle"
+                   TargetType="Entry">
+                <Setter Property="PlaceholderColor"
+                        Value="LightBlue"/>
+                <Setter Property="Margin"
+                        Value="10,0"/>
+            </Style>
+            <!--txtIdStyle-->
+            <Style x:Key="txtIdStyle"
+                   TargetType="Entry"
+                   BasedOn="{StaticResource baseEntryStyle}">
+                <Setter Property="IsEnabled"
+                        Value="False"/>
+                <Setter Property="Placeholder"
+                        Value="Id"/>
+            </Style>
+            <!--txtNameStyle-->
+            <Style x:Key="txtNameStyle"
+                   TargetType="Entry"
+                   BasedOn="{StaticResource baseEntryStyle}">
+                <Setter Property="Placeholder"
+                        Value="Name"/>
+                
+            </Style>
+            <!--txtImageStyle-->
+            <Style x:Key="txtImageStyle"
+                   TargetType="Entry"
+                   BasedOn="{StaticResource baseEntryStyle}">
+                <Setter Property="Placeholder"
+                        Value="Image Address"/>
+            </Style>
+            <!--txtDescStyle-->
+            <Style x:Key="txtDescStyle"
+                   TargetType="Entry"
+                   BasedOn="{StaticResource baseEntryStyle}">
+                <Setter Property="Placeholder"
+                        Value="Description"/>
+                <Setter Property="ClearButtonVisibility"
+                        Value="WhileEditing"/>
+            </Style>
+            <!--imageStyle-->
+            <Style x:Key="imageStyle"
+                   TargetType="Image">
+                <Setter Property="HeightRequest"
+                        Value="120"/>
+                <Setter Property="WidthRequest"
+                        Value="120"/>
+            </Style>
+            
+            <!--ListViewStyle-->
+            <Style x:Key="listViewStyle"
+                   TargetType="ListView">
+                <Setter Property="HasUnevenRows"
+                        Value="True"/>
+                <Setter Property="SeparatorColor"
+                        Value="CornflowerBlue"/>
+            </Style>
+            <!--lblContentListView-->
+            <Style x:Key="lblContentListView"
+                   TargetType="Label">
+                <Setter Property="FontSize"
+                        Value="17"/>
+                <Setter Property="FontAttributes"
+                        Value="Bold"/>
+            </Style>
+
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0.4*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackLayout Grid.Column="0"
+                     Grid.Row="0">
+            <Entry Text="{Binding Id}"
+                   Style="{StaticResource txtIdStyle}"/>
+            <Entry Text="{Binding Name}"
+                   Style="{StaticResource txtNameStyle}"/>
+            <Entry Text="{Binding ImageAvatar}"
+                   Style="{StaticResource txtImageStyle}"/>
+            <Entry Text="{Binding Description}"
+                   Style="{StaticResource txtDescStyle}"/>
+        </StackLayout>
+        
+        <StackLayout Grid.Column="1"
+                     Grid.Row="0"
+                     VerticalOptions="Center">
+            <Button Text="Thêm"
+                    Command="{Binding OnAddItemCommand}"/> 
+            <Button Text="Xóa"
+                    Command="{Binding OnDeleteItemCommand}"/>
+            <Button Text="Sửa"
+                    Command="{Binding OnUpdateCommand}"/>
+        </StackLayout>
+        
+        <Label Grid.Row="1"
+               Text="LIST ITEM"
+               Grid.ColumnSpan="2"
+               Style="{StaticResource lblListItem}"/>
+        
+        <StackLayout Grid.ColumnSpan="2"
+                     Grid.Row="2">
+            <ListView ItemsSource="{Binding ItemList}"
+                      Style="{StaticResource listViewStyle}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.3*"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0"
+                                       Grid.RowSpan="2"
+                                       Style="{StaticResource imageStyle}"
+                                       Source="{Binding Image, Mode=TwoWay}"/>
+                                <StackLayout Grid.Column="1"
+                                             Grid.Row="0"
+                                             Orientation="Horizontal">
+                                    <Label Text="{Binding Id, StringFormat='ID: {0}, '}"
+                                           Style="{StaticResource lblContentListView}"/>
+                                    <Label Text="{Binding Name, StringFormat='Name: {0}'}"
+                                           Style="{StaticResource lblContentListView}"/>
+                                </StackLayout>
+                                <Label Grid.Row="1"
+                                       Grid.Column="1"
+                                       Text="{Binding Description, StringFormat='Description: {0}'}"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                    
+                </ListView.ItemTemplate>
+                <ListView.Behaviors>
+                    <prism:EventToCommandBehavior EventName="ItemTapped"
+                                                  Command="{Binding BindingDataOnEntryCommand}"
+                                                  EventArgsParameterPath="Item"/>
+                </ListView.Behaviors>
+            </ListView>
+        </StackLayout>
+    </Grid>
+</ContentPage>
