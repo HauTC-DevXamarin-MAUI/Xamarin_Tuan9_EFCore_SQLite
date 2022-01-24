@@ -104,7 +104,7 @@ namespace EFCore_SQLite.ViewModels
             else
             {
                 //await _itemService.AddStudentAsync(new Item(int.Parse(Id), Name, Image, Description));
-                await _itemService.AddItemAsync(new Item(Name, ImageAvatar, Description, int.Parse(IdCategory)));
+                await _itemService.AddAsync(new Item(Name, ImageAvatar, Description, int.Parse(IdCategory)));
                 await LoadData();
             }
         }
@@ -115,7 +115,7 @@ namespace EFCore_SQLite.ViewModels
             var result = await PageDialogService.DisplayAlertAsync("Notification!", MessDelete, "OK", "No!");
             if (result == true)
             {
-                await _itemService.DeleteItemAsync(int.Parse(Id));
+                await _itemService.DeleteAsync(int.Parse(Id));
                 await LoadData();
             }
         }
@@ -126,8 +126,8 @@ namespace EFCore_SQLite.ViewModels
             var result = await PageDialogService.DisplayAlertAsync("Notification!", MessUpdate, "OK", "No!");
             if (result == true)
             {
-                await _itemService.UpdateItemAsync(new Item(int.Parse(Id) ,Name, ImageAvatar, Description, int.Parse(IdCategory)));
-                await LoadData(); 
+                await _itemService.UpdateItemAsync(new Item(int.Parse(Id), Name, ImageAvatar, Description, int.Parse(IdCategory)));
+                await LoadData();
             }
         }
         #endregion

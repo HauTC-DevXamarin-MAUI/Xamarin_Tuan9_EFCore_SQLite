@@ -40,11 +40,15 @@ namespace EFCore_SQLite.Services
             return false;
         }
 
-        public async Task<bool> DeleteAsync(T entity)
+        public async Task<bool> DeleteAsync(int id)
         {
             try
             {
-                _dbSet.Remove(entity);
+                var result = await _dbSet.FindAsync(id);
+                if (result == null) { 
+                    return false;
+                }
+                _dbSet.Remove(result);
                 await _dbContext.SaveChangesAsync();
                 return true;
             }
@@ -82,6 +86,7 @@ namespace EFCore_SQLite.Services
         {
             try
             {
+                //var result = await _dbSet.Where(t => t.Id.Equals(item.Id)).FirstOrDefault());
                 _dbSet.Update(entity);
                 await _dbContext.SaveChangesAsync();
                 return true;

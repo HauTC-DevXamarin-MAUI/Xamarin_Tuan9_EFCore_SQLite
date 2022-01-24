@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace EFCore_SQLite.Services
 {
-    public interface IItemService
+    public interface IItemService : IBaseService<Item>
     {
-        Task<bool> AddItemAsync(Item item);
         Task<bool> UpdateItemAsync(Item item);
-        Task<bool> DeleteItemAsync(int id);
-        Task<Item> GetItemAsync(int id);
         Task<IEnumerable<Item>> GetItemAsync();
+
+        //Task<bool> AddItemAsync(Item item);
+        //Task<bool> DeleteItemAsync(int id);
+        //Task<Item> GetItemAsync(int id);
+
     }
+   
 }

@@ -73,7 +73,7 @@ namespace EFCore_SQLite.ViewModels
                 var result1 = _dbContext.Items.Where(t => t.IdCategory == int.Parse(Id)).FirstOrDefault();
                 if(result1 == null)
                 {
-                    await _categoryService.DeleteCategoryAsync(int.Parse(Id));
+                    await _categoryService.DeleteAsync(int.Parse(Id));
                     await LoadData();
                 }
                 else
@@ -99,7 +99,7 @@ namespace EFCore_SQLite.ViewModels
                 return;
             }
             else { 
-                await _categoryService.AddCategoryAsync(new Category(Name));
+                await _categoryService.AddAsync(new Category(Name));
                 await LoadData();
             }
         }

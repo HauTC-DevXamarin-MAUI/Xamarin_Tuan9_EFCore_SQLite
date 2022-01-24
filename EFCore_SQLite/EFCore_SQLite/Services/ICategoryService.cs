@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace EFCore_SQLite.Services
 {
-    public interface ICategoryService
+
+    public interface ICategoryService : IBaseService<Category>
     {
-        Task<bool> AddCategoryAsync(Category category);
-        Task<bool> UpdateCategoryAsync(Category category);
-        Task<bool> DeleteCategoryAsync(int id);
-        Task<Category> GetCategoryAsync(int id);
         Task<IEnumerable<Category>> GetCategoryAsync();
+        Task<bool> UpdateCategoryAsync(Category category);
+
+
+        //Task<bool> AddCategoryAsync(Category category);
+        //Task<bool> DeleteCategoryAsync(int id);
+        //Task<Category> GetCategoryAsync(int id);
     }
 }
