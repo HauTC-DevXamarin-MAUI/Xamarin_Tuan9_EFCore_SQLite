@@ -23,10 +23,10 @@ namespace EFCore_SQLite.Services
 
         public async  Task<bool> DeleteItemAsync(int id)
         {
-            var studentResult = _dbContext.Items.Where(t => t.Id.Equals(id)).FirstOrDefault();
-            if (studentResult != null)
+            var itemResult = _dbContext.Items.Where(t => t.Id.Equals(id)).FirstOrDefault();
+            if (itemResult != null)
             {
-                _dbContext.Items.Remove(studentResult);
+                _dbContext.Items.Remove(itemResult);
                 await _dbContext.SaveChangesAsync();
             }
             return true;
@@ -46,14 +46,16 @@ namespace EFCore_SQLite.Services
         {
             try
             {
-                var studentResult = _dbContext.Items.Where(t => t.Id.Equals(item.Id)).FirstOrDefault();
-                if (studentResult != null)
+                var itemResult = _dbContext.Items.Where(t => t.Id.Equals(item.Id)).FirstOrDefault();
+                if (itemResult != null)
                 {
-                    studentResult.Name = item.Name;
-                    studentResult.Image = item.Image;
-                    studentResult.Description = item.Description;
+                    itemResult.Name = item.Name;
+                    itemResult.Image = item.Image;
+                    itemResult.Description = item.Description;
+                    itemResult.IdCategory = item.IdCategory;
 
-                    _dbContext.Items.Update(studentResult);
+
+                    _dbContext.Items.Update(itemResult);
                     await _dbContext.SaveChangesAsync();
                 }
                 return true;

@@ -1,4 +1,5 @@
-﻿using EFCore_SQLite.Models;
+﻿using EFCore_SQLite.Helpers;
+using EFCore_SQLite.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace EFCore_SQLite.Services
     class DatabaseContext : DbContext
     {
         public DbSet<Item> Items { get; set; }
+        public DbSet<Category> Categorys { get; set; }
 
         public DatabaseContext()
         {
@@ -21,10 +23,20 @@ namespace EFCore_SQLite.Services
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string dbPath = Path.Combine(FileSystem.AppDataDirectory, "item.db3");
-
             optionsBuilder
-                .UseSqlite($"Filename={dbPath}");
+                .UseSqlite($"Filename={Constant.dbPath}");
+
+            //string dbPath1 = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            //    "item.db3");
+            //Console.WriteLine(dbPath1);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Item>()
+                .HasOne<Category>(d => d.Category)
+                .WithMany(dm => dm.Items)
+                .HasForeignKey(dkey => dkey.IdCategory);
         }
     }
 }

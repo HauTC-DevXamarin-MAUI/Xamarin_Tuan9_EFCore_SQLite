@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="EFCore_SQLite.Views.CategoryPage"
+             xmlns:converters="clr-namespace:EFCore_SQLite.Converters"
+             Title="{Binding Title}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!--Btn Style-->
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor"
+                        Value="CadetBlue"/>
+                <Setter Property="TextColor"
+                        Value="Black"/>
+                <Setter Property="Margin"
+                        Value="0,0,10,0"/>
+            </Style>
+            <!--Lable List Item Style-->
+            <Style TargetType="Label"
+                   x:Key="lblListCategory">
+
+                <Setter Property="FontSize"
+                        Value="25"/>
+                <Setter Property="HorizontalOptions"
+                        Value="Center"/>
+                <Setter Property="FontAttributes"
+                        Value="Bold,Italic"/>
+                <Setter Property="TextColor"
+                        Value="Black"/>
+            </Style>
+            <!--BaseEntryStyle-->
+            <Style x:Key="baseEntryStyle"
+                   TargetType="Entry">
+                <Setter Property="PlaceholderColor"
+                        Value="LightBlue"/>
+                <Setter Property="Margin"
+                        Value="10,0"/>
+            </Style>
+            <!--txtIdStyle-->
+            <Style x:Key="txtIdStyle"
+                   TargetType="Entry"
+                   BasedOn="{StaticResource baseEntryStyle}">
+                <Setter Property="IsEnabled"
+                        Value="False"/>
+                <Setter Property="Placeholder"
+                        Value="Id Category"/>
+            </Style>
+            <!--txtNameStyle-->
+            <Style x:Key="txtNameStyle"
+                   TargetType="Entry"
+                   BasedOn="{StaticResource baseEntryStyle}">
+                <Setter Property="Placeholder"
+                        Value="Name Category"/>
+
+            </Style>
+            <!--Lable Trigger MaxLenght-->
+            <Style x:Key="lblTriggerMaxlenght"
+                   TargetType="Label">
+                <Setter Property="FontSize"
+                        Value="12"/>
+                <Setter Property="HorizontalTextAlignment"
+                        Value="Center"/>
+                <Setter Property="HorizontalOptions"
+                        Value="Center"/>
+                <Setter Property="IsVisible"
+                        Value="False"/>
+                <Setter Property="Text"
+                        Value="Tên lớn hơn 8 và nhỏ hơn 20"/>
+                <Setter Property="TextColor"
+                        Value="OrangeRed"/>
+            </Style>
+
+            <!--ListViewStyle-->
+            <Style x:Key="listViewStyle"
+                   TargetType="ListView">
+                <Setter Property="HasUnevenRows"
+                        Value="True"/>
+                <Setter Property="SeparatorColor"
+                        Value="CornflowerBlue"/>
+            </Style>
+            <!--lblContentListView-->
+            <Style x:Key="lblContentListView"
+                   TargetType="Label">
+                <Setter Property="FontSize"
+                        Value="17"/>
+                <Setter Property="FontAttributes"
+                        Value="Bold"/>
+                <Setter Property="Margin"
+                        Value="20,0,0,0"/>
+                <Setter Property="TextColor"
+                        Value="OrangeRed"/>
+            </Style>
+            
+            
+            <!--Conventer-->
+            <converters:NameCorrectToHideLabelConverter x:Key="NameCorrectToHideLabelConverter" />
+            <converters:NameCorrectConverter x:Key="NameCorrectConverter" />
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="1.5*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0.4*"/>
+        </Grid.ColumnDefinitions>
+        <StackLayout Grid.Column="0"
+                     Grid.Row="0"
+                     VerticalOptions="CenterAndExpand">
+            <!--Lable Trigger-->
+            <Label Style="{StaticResource lblTriggerMaxlenght}">
+                <Label.Triggers>
+                    <MultiTrigger TargetType="Label">
+                        <MultiTrigger.Conditions>
+                            <BindingCondition Binding="{Binding Source={x:Reference txtName}, 
+                                                        Path=Text, 
+                                                        Converter={StaticResource NameCorrectToHideLabelConverter}}" 
+                                                        Value="False" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="IsVisible" Value="True" />
+                    </MultiTrigger>
+                </Label.Triggers>
+            </Label>
+            <!--Entry-->
+            <Entry Text="{Binding Id}"
+                   Style="{StaticResource txtIdStyle}"/>
+            <Entry x:Name="txtName"
+                   Text="{Binding Name, Mode=TwoWay}"
+                   Style="{StaticResource txtNameStyle}"/>
+        </StackLayout>
+        <StackLayout Grid.Column="1"
+                     Grid.Row="0"
+                     VerticalOptions="Center">
+            <Button Text="Thêm"
+                    InputTransparent="True"
+                    Command="{Binding OnAddCategoryCommand}">
+                <Button.Triggers>
+                    <!--Data Trigger-->
+                    <DataTrigger TargetType="Button"
+                                 Binding="{Binding Source={x:Reference txtName},
+                                                   Path=Text,
+                                                   Converter={StaticResource NameCorrectConverter}}"
+                                 Value="True">
+                        <Setter Property="InputTransparent"
+                                Value="False"/>
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+            <Button Text="Xóa"
+                    Command="{Binding OnDeleteCategoryCommand}"
+                    IsEnabled="True"/>
+            <Button Text="Sửa"
+                    Command="{Binding OnUpdateCategoryCommand}"/>
+        </StackLayout>
+        
+        
+        <Label Grid.Row="1"
+               Text="LIST CATEGORY"
+               Grid.ColumnSpan="2"
+               Style="{StaticResource lblListCategory}"/>
+
+        <StackLayout Grid.ColumnSpan="2"
+                     Grid.Row="2">
+            <ListView ItemsSource="{Binding CategoryList}"
+                      Style="{StaticResource listViewStyle}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0"
+                                       Grid.Row="0"
+                                       Text="{Binding Id, StringFormat='CategoryID: {0}'}"
+                                       Style="{StaticResource lblContentListView}"/>
+                                <Label Grid.Column="0"
+                                       Grid.Row="1"
+                                       Text="{Binding Name, StringFormat='CategoryName: {0}'}"
+                                       Margin="20,0,0,0"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+
+                </ListView.ItemTemplate>
+                <ListView.Behaviors>
+                    <prism:EventToCommandBehavior EventName="ItemTapped"
+                                                  Command="{Binding BindingDataOnEntryCommand}"
+                                                  EventArgsParameterPath="Item"/>
+                </ListView.Behaviors>
+            </ListView>
+        </StackLayout>
+    </Grid>
+</ContentPage>

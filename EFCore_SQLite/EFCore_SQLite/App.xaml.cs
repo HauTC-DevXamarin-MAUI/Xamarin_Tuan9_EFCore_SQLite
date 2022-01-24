@@ -20,7 +20,7 @@ namespace EFCore_SQLite
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("NavigationPage/ItemPage");
+            await NavigationService.NavigateAsync("NavigationPage/MainPage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -32,6 +32,9 @@ namespace EFCore_SQLite
 
             //Services
             containerRegistry.Register<IItemService, ItemService>();
+            containerRegistry.Register<ICategoryService, CategoryService>();
+            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+            containerRegistry.RegisterForNavigation<CategoryPage, CategoryPageViewModel>();
         }
     }
 }

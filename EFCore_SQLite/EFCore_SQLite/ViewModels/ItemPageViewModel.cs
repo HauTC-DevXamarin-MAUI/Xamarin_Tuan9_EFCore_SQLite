@@ -15,12 +15,20 @@ namespace EFCore_SQLite.ViewModels
     public class ItemPageViewModel : ViewModelBase
     {
         private IItemService _itemService;
+        private DatabaseContext _dbContext = new DatabaseContext();
+
 
         private string _id;
         public string Id
         {
             get { return _id; }
             set { SetProperty(ref _id, value); }
+        }
+        private string _idCategory;
+        public string IdCategory
+        {
+            get { return _idCategory; }
+            set { SetProperty(ref _idCategory, value); }
         }
 
         private string _name;
@@ -68,13 +76,36 @@ namespace EFCore_SQLite.ViewModels
             Name = item.Name;
             ImageAvatar = item.Image;
             Description = item.Description;
+            IdCategory = item.IdCategory.ToString(); ;
         }
 
+        private string MessNameNull = "Tên không được để trống";
+        private string MessCategoryNull = "Category không được để trống";
+        private string MessCategoryNotExist = "Không tồn tại Category ID này";
+
         private async Task HandleAddItem()
-        {
-            //await _itemService.AddStudentAsync(new Item(int.Parse(Id), Name, Image, Description));
-            await _itemService.AddItemAsync(new Item(Name, ImageAvatar, Description));
-            await LoadData();
+        {            
+            if(Name == null)
+            {
+                await PageDialogService.DisplayAlertAsync("Thông Báo!", MessNameNull, "OK");
+                return;
+            }    
+            if(IdCategory == null)
+            {
+                await PageDialogService.DisplayAlertAsync("Thông Báo!", MessCategoryNull, "OK");
+                return;
+            }
+            var result = _dbContext.Categorys.Where(t => t.Id == int.Parse(IdCategory)).FirstOrDefault();
+            if (result == null)
+            {
+                await PageDialogService.DisplayAlertAsync("Thông Báo!", MessCategoryNotExist, "OK");
+            }
+            else
+            {
+                //await _itemService.AddStudentAsync(new Item(int.Parse(Id), Name, Image, Description));
+                await _itemService.AddItemAsync(new Item(Name, ImageAvatar, Description, int.Parse(IdCategory)));
+                await LoadData();
+            }
         }
 
         private string MessDelete = "Do you sure delete item?";
@@ -94,7 +125,7 @@ namespace EFCore_SQLite.ViewModels
             var result = await PageDialogService.DisplayAlertAsync("Notification!", MessUpdate, "OK", "No!");
             if (result == true)
             {
-                await _itemService.UpdateItemAsync(new Item(int.Parse(Id) ,Name, ImageAvatar, Description));
+                await _itemService.UpdateItemAsync(new Item(int.Parse(Id) ,Name, ImageAvatar, Description, int.Parse(IdCategory)));
                 await LoadData(); 
             }
         }

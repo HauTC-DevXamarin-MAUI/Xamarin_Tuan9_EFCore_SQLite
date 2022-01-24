@@ -4,6 +4,7 @@
              xmlns:prism="http://prismlibrary.com"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="EFCore_SQLite.Views.ItemPage"
+             xmlns:converters="clr-namespace:EFCore_SQLite.Converters"
              Title="{Binding Title}">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -70,6 +71,14 @@
                 <Setter Property="ClearButtonVisibility"
                         Value="WhileEditing"/>
             </Style>
+            <!--txtIdCategoryStyle-->
+            <Style x:Key="txtIdCategoryStyle"
+                   TargetType="Entry"
+                   BasedOn="{StaticResource baseEntryStyle}">
+                <Setter Property="Placeholder"
+                        Value="IdCategory"/>
+
+            </Style>
             <!--imageStyle-->
             <Style x:Key="imageStyle"
                    TargetType="Image">
@@ -77,6 +86,22 @@
                         Value="120"/>
                 <Setter Property="WidthRequest"
                         Value="120"/>
+            </Style>
+            <!--Lable Trigger MaxLenght-->
+            <Style x:Key="lblTriggerMaxlenght"
+                   TargetType="Label">
+                <Setter Property="FontSize"
+                        Value="12"/>
+                <Setter Property="HorizontalTextAlignment"
+                        Value="Center"/>
+                <Setter Property="HorizontalOptions"
+                        Value="Center"/>
+                <Setter Property="IsVisible"
+                        Value="False"/>
+                <Setter Property="Text"
+                        Value="Tên lớn hơn 8 và nhỏ hơn 20"/>
+                <Setter Property="TextColor"
+                        Value="OrangeRed"/>
             </Style>
             
             <!--ListViewStyle-->
@@ -95,6 +120,10 @@
                 <Setter Property="FontAttributes"
                         Value="Bold"/>
             </Style>
+            
+            <!--Conventer-->
+            <converters:NameCorrectToHideLabelConverter x:Key="NameCorrectToHideLabelConverter" />
+            <converters:NameCorrectConverter x:Key="NameCorrectConverter" />
 
 
         </ResourceDictionary>
@@ -103,7 +132,7 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1.5*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -112,23 +141,55 @@
 
         <StackLayout Grid.Column="0"
                      Grid.Row="0">
+            <!--Lable Trigger-->
+            <Label Style="{StaticResource lblTriggerMaxlenght}">
+                <Label.Triggers>
+                    <MultiTrigger TargetType="Label">
+                        <MultiTrigger.Conditions>
+                            <BindingCondition Binding="{Binding Source={x:Reference txtName}, 
+                                                        Path=Text, 
+                                                        Converter={StaticResource NameCorrectToHideLabelConverter}}" 
+                                                        Value="False" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="IsVisible" Value="True" />
+                    </MultiTrigger>
+                </Label.Triggers>
+            </Label>
+            <!--Entry-->
             <Entry Text="{Binding Id}"
                    Style="{StaticResource txtIdStyle}"/>
-            <Entry Text="{Binding Name}"
+            <Entry x:Name="txtName"
+                   Text="{Binding Name}"
                    Style="{StaticResource txtNameStyle}"/>
             <Entry Text="{Binding ImageAvatar}"
                    Style="{StaticResource txtImageStyle}"/>
             <Entry Text="{Binding Description}"
                    Style="{StaticResource txtDescStyle}"/>
+            <Entry Text="{Binding IdCategory}"
+                   Style="{StaticResource txtIdCategoryStyle}"/>
         </StackLayout>
         
         <StackLayout Grid.Column="1"
                      Grid.Row="0"
                      VerticalOptions="Center">
             <Button Text="Thêm"
-                    Command="{Binding OnAddItemCommand}"/> 
+                    InputTransparent="True"
+                    Command="{Binding OnAddItemCommand}">
+                <Button.Triggers>
+                    <!--Data Trigger-->
+                    <DataTrigger TargetType="Button"
+                                 Binding="{Binding Source={x:Reference txtName},
+                                                   Path=Text,
+                                                   Converter={StaticResource NameCorrectConverter}}"
+                                 Value="True">
+                        <Setter Property="InputTransparent"
+                                Value="False"/>
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button> 
             <Button Text="Xóa"
-                    Command="{Binding OnDeleteItemCommand}"/>
+                    Command="{Binding OnDeleteItemCommand}"
+                    IsEnabled="True"/>
             <Button Text="Sửa"
                     Command="{Binding OnUpdateCommand}"/>
         </StackLayout>

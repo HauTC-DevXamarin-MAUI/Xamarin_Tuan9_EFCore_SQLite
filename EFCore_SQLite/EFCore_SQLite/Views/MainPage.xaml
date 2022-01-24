@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="EFCore_SQLite.Views.MainPage"
+             Title="{Binding Title}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding RestoreCommand}" Text="Restore" />
+        <ToolbarItem Command="{Binding BackupCommand}" Text="Backup" />
+    </ContentPage.ToolbarItems>
+    <StackLayout HorizontalOptions="Center"
+                 VerticalOptions="Center">
+        <Button Text="ItemPage"
+                Command="{Binding NavigationItemPageCommand}"/>
+        <Button Text="CategoryPage"
+                Command="{Binding NavigationCategoryPageCommand}"/>
+    </StackLayout>
+</ContentPage>
