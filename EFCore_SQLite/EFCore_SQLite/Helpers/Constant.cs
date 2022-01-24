@@ -8,7 +8,7 @@ namespace EFCore_SQLite.Helpers
 {
     public static class Constant
     {
-        public static string dbPath = Path.Combine(FileSystem.AppDataDirectory, "item.db3");
+        public static string DBPath = Path.Combine(FileSystem.AppDataDirectory, "item.db3");
         public static string DBPathBackup = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "itemBackup.db3");
     }
 }

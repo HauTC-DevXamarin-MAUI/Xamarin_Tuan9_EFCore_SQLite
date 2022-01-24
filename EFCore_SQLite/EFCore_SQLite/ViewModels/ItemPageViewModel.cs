@@ -16,8 +16,9 @@ namespace EFCore_SQLite.ViewModels
     {
         private IItemService _itemService;
         private DatabaseContext _dbContext = new DatabaseContext();
+        public ObservableCollection<Item> ItemList { get; set; } = new ObservableCollection<Item>();
 
-
+        #region Property
         private string _id;
         public string Id
         {
@@ -51,9 +52,9 @@ namespace EFCore_SQLite.ViewModels
             get { return _imageAvatar; }
             set { SetProperty(ref _imageAvatar, value); }
         }
+        #endregion 
 
-        public ObservableCollection<Item> ItemList { get; set; } = new ObservableCollection<Item>();
-
+        #region HandleCommand
         private DelegateCommand _onAddItemCommand;
         public DelegateCommand OnAddItemCommand =>
             _onAddItemCommand ?? (_onAddItemCommand = new DelegateCommand(async () => await HandleAddItem()));
@@ -79,10 +80,10 @@ namespace EFCore_SQLite.ViewModels
             IdCategory = item.IdCategory.ToString(); ;
         }
 
+
         private string MessNameNull = "Tên không được để trống";
         private string MessCategoryNull = "Category không được để trống";
         private string MessCategoryNotExist = "Không tồn tại Category ID này";
-
         private async Task HandleAddItem()
         {            
             if(Name == null)
@@ -129,7 +130,9 @@ namespace EFCore_SQLite.ViewModels
                 await LoadData(); 
             }
         }
+        #endregion
 
+        #region Constructor
         public ItemPageViewModel(INavigationService navigationService, 
                                  IItemService itemService, 
                                  IPageDialogService pageDialogService) 
@@ -138,6 +141,7 @@ namespace EFCore_SQLite.ViewModels
             _itemService = itemService;
             Title = "Item Page";
         }
+        #endregion
         async Task LoadData()
         {
             ItemList.Clear();

@@ -24,7 +24,7 @@ namespace EFCore_SQLite.Services
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-                .UseSqlite($"Filename={Constant.dbPath}");
+                .UseSqlite($"Filename={Constant.DBPath}");
 
             //string dbPath1 = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             //    "item.db3");

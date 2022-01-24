@@ -104,7 +104,7 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="1.4*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

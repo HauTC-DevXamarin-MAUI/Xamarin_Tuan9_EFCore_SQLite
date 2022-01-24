@@ -16,8 +16,9 @@ namespace EFCore_SQLite.ViewModels
     {
         private DatabaseContext _dbContext = new DatabaseContext();
         private ICategoryService _categoryService;
+        public ObservableCollection<Category> CategoryList { get; set; } = new ObservableCollection<Category>();
 
-
+        #region Property
         private string _id;
         public string Id
         {
@@ -31,8 +32,9 @@ namespace EFCore_SQLite.ViewModels
             set { SetProperty(ref _name, value); }
         }
 
-        public ObservableCollection<Category> CategoryList { get; set; } = new ObservableCollection<Category>();
+        #endregion
 
+        #region HandleCommand
         private DelegateCommand _onAddCategoryCommand;
         public DelegateCommand OnAddCategoryCommand =>
             _onAddCategoryCommand ?? (_onAddCategoryCommand = new DelegateCommand(async () => await HandleOnAddCategoryCommand()));
@@ -101,7 +103,9 @@ namespace EFCore_SQLite.ViewModels
                 await LoadData();
             }
         }
+        #endregion
 
+        #region Constructor
         public CategoryPageViewModel(INavigationService navigationService,
                                      ICategoryService categoryService,
                                      IPageDialogService pageDialogService)
@@ -110,7 +114,7 @@ namespace EFCore_SQLite.ViewModels
             _categoryService = categoryService;
             Title = "Category Page";
         }
-
+        #endregion
         async Task LoadData()
         {
             CategoryList.Clear();

@@ -14,18 +14,25 @@ namespace EFCore_SQLite.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
+        #region HandleCommand
         private DelegateCommand _navigationItemPageCommand;
         public DelegateCommand NavigationItemPageCommand =>
             _navigationItemPageCommand ?? (_navigationItemPageCommand = new DelegateCommand(HandleNavigationItemPageCommand));
+
+        private DelegateCommand _navigationCategoryPageCommand;
+        public DelegateCommand NavigationCategoryPageCommand =>
+            _navigationCategoryPageCommand ?? (_navigationCategoryPageCommand = new DelegateCommand(HandleNavigationCategoryPageCommand));
         void HandleNavigationItemPageCommand()
         {
             NavigationService.NavigateAsync("ItemPage");
         }
 
-        private DelegateCommand _navigationCategoryPageCommand;
-        public DelegateCommand NavigationCategoryPageCommand =>
-            _navigationCategoryPageCommand ?? (_navigationCategoryPageCommand = new DelegateCommand(HandleNavigationCategoryPageCommand));
+        void HandleNavigationCategoryPageCommand()
+        {
+            NavigationService.NavigateAsync("CategoryPage");
+        }
 
+        #region Handle Backup and Retore
 
         private DelegateCommand _backupCommand;
         public DelegateCommand BackupCommand =>
@@ -34,17 +41,15 @@ namespace EFCore_SQLite.ViewModels
         private DelegateCommand _restoreCommand;
         public DelegateCommand RestoreCommand =>
             _restoreCommand ?? (_restoreCommand = new DelegateCommand(async () => await ExecuteRestore()));
-        void HandleNavigationCategoryPageCommand()
-        {
-            NavigationService.NavigateAsync("CategoryPage");
-        }
+
+
         private string backupSuccess = "Sao lưu thành công";
         private string backupError = "Sao lưu thất bại";
         private async Task ExcuteBackUp()
         {
             try
             {
-                File.Copy(Constant.dbPath, Constant.DBPathBackup, true);
+                File.Copy(Constant.DBPath, Constant.DBPathBackup, true);
                 Console.WriteLine(Constant.DBPathBackup);
                 await PageDialogService.DisplayAlertAsync("Thông báo", backupSuccess, "Đóng");
             }
@@ -61,11 +66,11 @@ namespace EFCore_SQLite.ViewModels
         {
             if (File.Exists(Constant.DBPathBackup))
             {
-                if (File.Exists(Constant.dbPath))
+                if (File.Exists(Constant.DBPath))
                 {
-                    File.Delete(Constant.dbPath);
+                    File.Delete(Constant.DBPath);
                 }
-                File.Copy(Constant.DBPathBackup, Constant.dbPath);
+                File.Copy(Constant.DBPathBackup, Constant.DBPath);
                 await PageDialogService.DisplayAlertAsync("Thông báo", retoreSuccess, "Đóng");
             }
             else
@@ -73,11 +78,17 @@ namespace EFCore_SQLite.ViewModels
                 await PageDialogService.DisplayAlertAsync("Thông báo", retoreError, "Đóng");
             }
         }
+        #endregion
+
+        #endregion
+
+        #region Constructor
         public MainPageViewModel(INavigationService navigationService,
                                  IPageDialogService pageDialogService)
             : base(navigationService, pageDialogService)
         {
             Title = "Main Page";
         }
+        #endregion
     }
 }

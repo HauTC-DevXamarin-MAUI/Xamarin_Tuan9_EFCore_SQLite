@@ -5,10 +5,29 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="EFCore_SQLite.Views.MainPage"
              Title="{Binding Title}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!--Style-->
+            <!--+++++++++++++++++++-->
+            
+            <!--Btn Style-->
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor"
+                        Value="CadetBlue"/>
+                <Setter Property="TextColor"
+                        Value="Black"/>
+                <Setter Property="Margin"
+                        Value="0,0,10,0"/>
+            </Style>
+            
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding RestoreCommand}" Text="Restore" />
         <ToolbarItem Command="{Binding BackupCommand}" Text="Backup" />
     </ContentPage.ToolbarItems>
+    
     <StackLayout HorizontalOptions="Center"
                  VerticalOptions="Center">
         <Button Text="ItemPage"
