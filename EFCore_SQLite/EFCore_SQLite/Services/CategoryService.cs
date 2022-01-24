@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 
 namespace EFCore_SQLite.Services
 {
+    //public interface ICategoryService : IBaseService<Category>
+    //{
+    //}
+    //public class CategoryService : IBaseService<Category>, ICategoryService
+    //{
+    //}
     class CategoryService : ICategoryService
     {
         private DatabaseContext _dbContext = new DatabaseContext();
@@ -67,5 +73,7 @@ namespace EFCore_SQLite.Services
                 return false;
             }
         }
+
+
     }
 }

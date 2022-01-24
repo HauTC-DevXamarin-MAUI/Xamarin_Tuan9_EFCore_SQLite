@@ -13,6 +13,7 @@ namespace EFCore_SQLite.Services
     {
         public DbSet<Item> Items { get; set; }
         public DbSet<Category> Categorys { get; set; }
+        public IEnumerable<object> Students { get; internal set; }
 
         public DatabaseContext()
         {

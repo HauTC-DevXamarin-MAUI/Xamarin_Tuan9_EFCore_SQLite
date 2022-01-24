@@ -29,12 +29,12 @@ namespace EFCore_SQLite
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<ItemPage, ItemPageViewModel>();
+            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+            containerRegistry.RegisterForNavigation<CategoryPage, CategoryPageViewModel>();
 
             //Services
             containerRegistry.Register<IItemService, ItemService>();
             containerRegistry.Register<ICategoryService, CategoryService>();
-            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
-            containerRegistry.RegisterForNavigation<CategoryPage, CategoryPageViewModel>();
         }
     }
 }
